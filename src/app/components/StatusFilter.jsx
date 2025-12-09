@@ -7,11 +7,11 @@ export default function StatusFilter() {
   const setFilter = useStore((s) => s.setFilter);
 
   const buttonClass = (active) =>
-    `px-4 py-2 rounded-lg border text-sm 
-    ${active ? "bg-blue-500 text-white" : "bg-white hover:bg-gray-100"}`;
+    `flex shrink-0 h-12 lg:h-auto items-center justify-center gap-x-2 rounded-lg bg-[#434e3a] transition-colors px-5 ring-1 ring-inset ring-[#303928] 
+    ${active ? "bg-[#141811] text-white border border-[#80F20D]" : "hover:bg-[#3d4833] "}`;
 
   return (
-    <div className="flex justify-center gap-3 my-4">
+    <div className="flex justify-center gap-2 md:gap-3">
       <button
         className={buttonClass(filter === "")}
         onClick={() => setFilter("")}
@@ -23,21 +23,24 @@ export default function StatusFilter() {
         className={buttonClass(filter === "alive")}
         onClick={() => setFilter("alive")}
       >
-        Alive
+      <span className="size-2 rounded-full bg-green-500"></span>
+      <p className="text-white text-sm font-medium leading-normal">Alive</p>
       </button>
 
       <button
         className={buttonClass(filter === "dead")}
         onClick={() => setFilter("dead")}
       >
-        Dead
+      <span className="size-2 rounded-full bg-red-500"></span>
+      <p className="text-white text-sm font-medium leading-normal">Dead</p>
       </button>
 
       <button
         className={buttonClass(filter === "unknown")}
         onClick={() => setFilter("unknown")}
       >
-        Unknown
+      <span className="size-2 rounded-full bg-gray-500"></span>
+      <p className="text-white text-sm font-medium leading-normal">Unknown</p>
       </button>
     </div>
   );
