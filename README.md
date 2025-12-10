@@ -7,8 +7,6 @@ Follow the steps below to run the project locally.
 
 ## 🚀 Setup Project
 
----
-
 1. Clone Repository
     git clone <repo-url>
 2. Install Dependencies
@@ -22,14 +20,10 @@ http://localhost:3000
 
 ### ⏱️ Time Tracking
 
----
-
 Total time spent: ~24 hours (spread over 2 days)
 Includes learning Next.js and Zustand for the first time.
 
 ## Breakdown by task:
-
----
 
 - Project setup: 15 minutes
 - UI layout & styling: 10 hours
