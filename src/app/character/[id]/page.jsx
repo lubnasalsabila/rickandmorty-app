@@ -1,6 +1,5 @@
-export const runtime = 'edge';
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
-
 
 import Link from "next/link";
 import Loading from "./loading";
@@ -9,6 +8,8 @@ export default async function CharacterDetail({ params }) {
   const { id } = await params;
 
   if (!params) return <Loading />;
+
+  // Fetch character
   const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`, {
     cache: "no-store",
   });
@@ -17,9 +18,24 @@ export default async function CharacterDetail({ params }) {
 
   const char = await res.json();
 
-  // Fetch episode details
-  const episodePromises = char.episode.map((ep) => fetch(ep).then((r) => r.json()));
-  const episodes = await Promise.all(episodePromises);
+  const episodeIds = char.episode.map((ep) => ep.split("/").pop());
+
+  let episodes = [];
+
+  try {
+    const apiURL = `https://rickandmortyapi.com/api/episode/[${episodeIds.join(",")}]`;
+
+    const epsRes = await fetch(apiURL, { cache: "no-store" });
+
+    if (!epsRes.ok) throw new Error("Failed loading episodes");
+
+    const epsData = await epsRes.json();
+
+    episodes = Array.isArray(epsData) ? epsData : [epsData];
+  } catch (err) {
+    console.error("EPISODE FETCH ERROR:", err);
+    episodes = [];
+  }
 
   const statusColor =
     char.status === "Alive"
@@ -143,7 +159,7 @@ export default async function CharacterDetail({ params }) {
 
           {/* RIGHT COLUMN — EPISODES */}
           <div className="lg:col-span-8 flex flex-col gap-6">
-            <div className="flex flex-col bg-[#303928] rounded-xl border border-white/5 h-full  overflow-hidden">
+            <div className="flex flex-col bg-[#303928] rounded-xl border border-white/5 h-full overflow-hidden">
               
               <div className="p-6 border-b border-white/10 flex justify-between items-center sticky top-0 bg-[#303928] z-10">
                 <div className="flex items-center gap-3">
@@ -159,7 +175,6 @@ export default async function CharacterDetail({ params }) {
               <div className="overflow-y-auto max-h-[600px] p-4 flex flex-col gap-2 custom-scrollbar">
                 {episodes.map((ep) => {
                   const season = ep.episode.slice(1, 3);
-                  const episodeNum = ep.episode.slice(4, 6);
 
                   return (
                     <div
