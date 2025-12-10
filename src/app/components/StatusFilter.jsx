@@ -7,7 +7,7 @@ export default function StatusFilter() {
   const setFilter = useStore((s) => s.setFilter);
 
   const buttonClass = (active) =>
-    `flex shrink-0 h-12 lg:h-auto items-center justify-center gap-x-2 rounded-lg bg-[#434e3a] transition-colors px-5 ring-1 ring-inset ring-[#303928] 
+    `flex shrink-0 h-10 sm:h-12 lg:h-auto items-center justify-center gap-x-2 rounded-lg bg-[#434e3a] transition-colors px-3 sm:px-5 ring-1 ring-inset ring-[#303928] 
     ${active ? "bg-[#141811] text-white border border-[#80F20D]" : "hover:bg-[#3d4833] "}`;
 
   return (
