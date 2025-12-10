@@ -1,5 +1,4 @@
 export const runtime = "edge";
-export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import Loading from "./loading";
@@ -7,7 +6,7 @@ import Loading from "./loading";
 export default async function CharacterDetail({ params }) {
   const { id } = await params;
 
-  if (!params) return <Loading />;
+  if (!id) return <Loading />;
 
   // Fetch character
   const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`, {
@@ -18,12 +17,14 @@ export default async function CharacterDetail({ params }) {
 
   const char = await res.json();
 
+  // EPISODE FETCH FIX
   const episodeIds = char.episode.map((ep) => ep.split("/").pop());
 
   let episodes = [];
 
   try {
-    const apiURL = `https://rickandmortyapi.com/api/episode/[${episodeIds.join(",")}]`;
+    // FIX: REMOVE BRACKETS
+    const apiURL = `https://rickandmortyapi.com/api/episode/${episodeIds.join(",")}`;
 
     const epsRes = await fetch(apiURL, { cache: "no-store" });
 
